@@ -14,8 +14,8 @@ class App extends React.Component {
   state = {
     activeUser: null,
     bio: "This is a bio about the active user.",
-    lists: [],
-    tasks: []
+    columns: [],
+    tasks: {}
   }
 
   login = (username) => {
@@ -29,7 +29,22 @@ class App extends React.Component {
     })
   }
 
+  componentDidMount = () => {
+    fetch(`http://localhost:3000/tasks`)
+      .then(resp => resp.json())
+      .then(tasks => this.setState({
+        tasks: tasks
+      }))
+
+      fetch(`http://localhost:3000/columns`)
+      .then(resp => resp.json())
+      .then(columns => this.setState({
+        columns: columns
+      }))
+    }
+
   render() {
+    console.log(this.state)
     return (
       <div className="App">
       <NavBar />
@@ -40,9 +55,11 @@ class App extends React.Component {
       <Switch>
         <Route path='/login' render={(routerProps) => { return <LoginForm login={this.login} {...routerProps}/> }}/>
         <Route path='/sign-up' component={SignUpForm}/>
-        <Route path='/courses' render={(routerProps) => { return <ListContainer {...routerProps}/> }}/>
+        
+        <Route path='/courses' render={(routerProps) => { return <ListContainer tasks={this.state.tasks} columns={this.state.columns} {...routerProps}/> }}/>
+
         <Route path="/profile" render={(routerProps) => { return <Profile handleChange={this.handleChange} activeUser={this.state.activeUser} bio={this.state.bio}/> }} />
-        <Route path="/home" render={() => { return(<HomeTab activeUser={this.props.activeUser} />)}}/>
+        // <Route path="/home" render={() => { return(<HomeTab activeUser={this.props.activeUser} />)}}/>
       </Switch>
       </div>
     )
