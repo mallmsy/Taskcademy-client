@@ -13,12 +13,20 @@ import HomeTab from './components/HomeTab'
 class App extends React.Component {
   state = {
     activeUser: null,
-    bio: "This is a bio about the active user."
+    bio: "This is a bio about the active user.",
+    lists: [],
+    tasks: []
   }
 
   login = (username) => {
     this.setState({activeUser: username})
 
+  }
+
+  handleChange = (event) => {
+    this.setState({
+      [event.target.name]: event.target.value
+    })
   }
 
   render() {
@@ -33,12 +41,16 @@ class App extends React.Component {
         <Route path='/login' render={(routerProps) => { return <LoginForm login={this.login} {...routerProps}/> }}/>
         <Route path='/sign-up' component={SignUpForm}/>
         <Route path='/courses' render={(routerProps) => { return <ListContainer {...routerProps}/> }}/>
-        <Route path="/profile" render={(routerProps) => { return <Profile bio={this.props.bio}/> }} />
+        <Route path="/profile" render={(routerProps) => { return <Profile handleChange={this.handleChange} activeUser={this.state.activeUser} bio={this.state.bio}/> }} />
         <Route path="/home" render={() => { return(<HomeTab activeUser={this.props.activeUser} />)}}/>
       </Switch>
       </div>
     )
   }
 }
+
+
+//// fetch for Courses
+
 
 export default App;

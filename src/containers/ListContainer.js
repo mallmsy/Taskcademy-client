@@ -6,10 +6,20 @@ class ListContainer extends React.Component {
 
   render() {
     return (
-      <div>
-        <Container fluid>
-          <CardContainer />
-        </Container>
+      <div className="columns is-multiline">
+        <CardContainer />
+        <CardContainer />
+        <CardContainer />
+        <CardContainer />
+        <CardContainer />
+        <CardContainer />
+        <CardContainer />
+        <CardContainer />
+        <CardContainer />
+        <CardContainer />
+        <CardContainer />
+        <CardContainer />
+
       </div>
     );
   }

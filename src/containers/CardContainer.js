@@ -6,20 +6,19 @@ class CardContainer extends React.Component {
 
   render() {
     return (
-      <div>
-        <Container fluid>
-          <Card>
-            <Card.Header.Title>
-            COURSE NAME
-            </Card.Header.Title>
-            <Card.Content>
-              <Content>
-                <TaskCard />
-              </Content>
-            </Card.Content>
-
-          </Card>
-        </Container>
+      <div className="column">
+        <Card>
+          <Card.Header.Title>
+          COURSE NAME
+          </Card.Header.Title>
+          <Card.Content>
+            <Content>
+              <TaskCard />
+              <TaskCard />
+              <TaskCard />
+            </Content>
+          </Card.Content>
+        </Card>
       </div>
     );
   }
