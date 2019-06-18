@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Card, Content, Button } from 'reactbulma'
+import { Card, Content, Button } from 'reactbulma'
 import { Draggable } from 'react-beautiful-dnd'
 
 class TaskCard extends React.Component {

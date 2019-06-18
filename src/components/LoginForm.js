@@ -3,13 +3,28 @@ import { Button, Field, Control, Input, Title, Hero, Container } from 'reactbulm
 
 class LoginForm extends Component {
   state = {
-    username: "",
+    email: "",
     password: ""
   }
 
   handleSubmit = () => {
-    this.props.login(this.state.username)
-    this.props.history.push('/home')
+    fetch("http://localhost:3000/api/v1/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        user: this.state
+      })
+    })
+    .then(res => res.json())
+    .then(user => {
+      this.props.login(user)
+      this.props.history.push("/home")
+    })
+
+
   }
 
   handleChange = (event) => {
@@ -33,10 +48,10 @@ class LoginForm extends Component {
 
                   <Input
                   onChange={this.handleChange}
-                  name="username"
-                  value={this.state.username}
+                  name="email"
+                  value={this.state.email}
                   type="text"
-                  placeholder="username" />
+                  placeholder="email" />
 
               </Control>
               <Control>

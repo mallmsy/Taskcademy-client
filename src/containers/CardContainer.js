@@ -5,19 +5,25 @@ import { Droppable } from 'react-beautiful-dnd'
 
 class CardContainer extends React.Component {
 
+  handleClick = () => {
+    console.log(this.props)
+    this.props.activeUser ? this.props.enroll(this.props.course) : this.props.routerProps.history.push("/sign-up")
+  }
+
   render() {
+    console.log(this.props)
     return (
         <div className="column">
           <Card>
             <Card.Header.Title>
-            {this.props.blank ? "COMPLETED" : this.props.course.title}
-            <br/>
-            {this.props.browse ? <Button primary>Enroll</Button> : null}
+            {this.props.course.title}
             </Card.Header.Title>
+
+            {this.props.browse ? <Button primary onClick={this.handleClick}>Enroll</Button> : null}
+
             <Droppable droppableId={this.props.blank ? this.props.droppableId : this.props.course.id}>
               {(provided, snapshot) => {
                 return (
-                  this.props.blank ? null :
                   <div ref={provided.innerRef} {...provided.droppableProps} isDraggingOver = {snapshot.isDraggingOver}>
                     <Content>
                     {this.props.assignments.map((assignment, index) => {
@@ -29,8 +35,7 @@ class CardContainer extends React.Component {
                           </ul>
                         </div>
                       :
-                      <TaskCard key={assignment.id} index={index} assignment={assignment}/>
-                    )
+                      <TaskCard key={assignment.id} index={index} assignment={assignment}/>)
                     })}
                     </Content>
                   </div>

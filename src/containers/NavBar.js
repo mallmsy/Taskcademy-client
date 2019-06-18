@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Nav, Image, Button, Level } from 'reactbulma'
 
-const NavBar = () => {
+const NavBar = (props) => {
 
   return (
     <Nav hasShadow>
@@ -16,8 +16,14 @@ const NavBar = () => {
             <Level.Left>
             </Level.Left>
             <Level.Right>
-              <Level.Item> <Link to='/login'> <Button primary>Login</Button> </Link> </Level.Item>
-              <Level.Item> <Link to='/sign-up'> <Button>Sign Up</Button> </Link> </Level.Item>
+            {props.activeUser ?
+              <Level.Item> <Link to='/'> <Button primary onClick={() => props.logout()}>Logout</Button> </Link> </Level.Item>
+              :
+              <>
+                <Level.Item> <Link to='/login'> <Button primary>Login</Button> </Link> </Level.Item>
+                <Level.Item> <Link to='/sign-up'> <Button>Sign Up</Button> </Link> </Level.Item>
+              </>
+            }
               <Level.Item> <Link to='/courses'> <Button>Browse Courses</Button> </Link> </Level.Item>
 
             </Level.Right>

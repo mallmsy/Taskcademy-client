@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { Button, Field, Control, Input, Title, Hero, Container } from 'reactbulma'
 
-class LoginForm extends Component {
+class SignUpForm extends Component {
   state = {
-    username: "",
+    first_name: "",
+    last_name: "",
+    email: "",
     password: ""
   }
 
@@ -13,8 +16,22 @@ class LoginForm extends Component {
     })
   }
 
+  handleSubmit = () => {
+    fetch("http://localhost:3000/api/v1/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        user: this.state
+      })
+    })
+    .then(res => res.json())
+    .then(user => this.props.signUp(user))
+  }
+
   render() {
-    console.log(this.state)
     return (
       <div>
       <Hero>
@@ -23,26 +40,60 @@ class LoginForm extends Component {
             <Title>Sign Up</Title>
             <Field groupedCentered>
               <Control>
-
                 <Input
                 onChange={this.handleChange}
-                name="username"
-                value={this.state.username}
+                name="first_name"
+                value={this.state.first_name}
                 type="text"
-                placeholder="username" />
-
+                placeholder="first name" />
               </Control>
+
               <Control>
-
-                <Input
-                onChange={this.handleChange}
-                name="password"
-                value={this.state.password}
-                type="password"
-                placeholder="password"/>
-
+              <Input
+              onChange={this.handleChange}
+              name="last_name"
+              value={this.state.last_name}
+              type="text"
+              placeholder="last name"/>
               </Control>
-              <Button onClick={this.props.login}primary>Sign Up</Button>
+
+              <Control>
+              <Input
+              onChange={this.handleChange}
+              name="email"
+              value={this.state.email}
+              type="text"
+              placeholder="email"/>
+              </Control>
+
+              <Control>
+              <Input
+              onChange={this.handleChange}
+              name="password"
+              value={this.state.password}
+              type="password"
+              placeholder="password"/>
+              </Control>
+
+              <Control>
+              <Input
+              onChange={this.handleChange}
+              name="bio"
+              value={this.state.bio}
+              type="text"
+              placeholder="bio"/>
+              </Control>
+
+              <Control>
+              <Input
+              onChange={this.handleChange}
+              name="img_url"
+              value={this.state.img_url}
+              type="text"
+              placeholder="image url"/>
+              </Control>
+
+              <Link to="/home"><Button onClick={this.handleSubmit}primary>Sign Up</Button></Link>
             </Field>
           </Container>
         </Hero.Body>
@@ -53,4 +104,4 @@ class LoginForm extends Component {
 
 }
 
-export default LoginForm;
+export default SignUpForm;
