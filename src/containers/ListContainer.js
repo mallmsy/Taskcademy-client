@@ -34,7 +34,8 @@ class ListContainer extends React.Component {
               routerProps={this.props.routerProps}
               course={course.course}
               assignments={course.tasks}
-              key={course.id}/>
+              key={course.id}
+              renderTaskShow={this.props.renderTaskShow}/>
               )
           })
         }

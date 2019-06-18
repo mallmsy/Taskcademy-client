@@ -35,7 +35,7 @@ class CardContainer extends React.Component {
                           </ul>
                         </div>
                       :
-                      <TaskCard key={assignment.id} index={index} assignment={assignment}/>)
+                      <TaskCard key={assignment.id} index={index} assignment={assignment} routerProps={this.props.routerProps} renderTaskShow={this.props.renderTaskShow}/>)
                     })}
                     </Content>
                   </div>

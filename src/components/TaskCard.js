@@ -9,12 +9,12 @@ class TaskCard extends React.Component {
   }
 
   handleClick = () => {
-    this.setState((prevState) => {
-      return({complete: !prevState.complete})
-    })
+    this.props.renderTaskShow(this.props.assignment)
+    this.props.routerProps.history.push(`/task/${this.props.assignment.id}`)
   }
 
   render() {
+    console.log(this.props)
     return(
       <Draggable draggableId={this.props.assignment.id} index={this.props.index}>
       {(provided, snapshot) => {
@@ -27,7 +27,8 @@ class TaskCard extends React.Component {
               <Content>
               {this.props.assignment.description}
               </Content>
-              <Button onClick={this.handleClick}>{this.state.complete ? "✅"  : "☑️" }</Button>
+              <br/>
+              <Button onClick={this.handleClick}>Start Task</Button>
             </Card.Content>
         </Card>
       </div>
