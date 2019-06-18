@@ -11,7 +11,7 @@ class HomeTab extends Component {
       <div>
       <Section>
         <Container>
-          <ListContainer />
+          <ListContainer browse={false} courses={this.props.courses} />
         </Container>
       </Section>
       </div>

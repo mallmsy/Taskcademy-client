@@ -13,10 +13,12 @@ class ListContainer extends React.Component {
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
         <div className="columns is-multiline">
-        {this.props.columns.map(column => {
-          const tasks = column.taskIds.map(taskId => this.props.tasks[taskId])
-          return <CardContainer column={column} tasks={tasks} key={column.id}/>
-        })}
+        {this.props.courses.map(course => {
+          return (
+            <CardContainer browse={this.props.browse} course={course} assignments={course.assignments} key={course.id}/>
+          )}
+        )}
+          {/*<CardContainer blank={true} droppableId={0} key={0}/>*/}
         </div>
       </DragDropContext>
     );

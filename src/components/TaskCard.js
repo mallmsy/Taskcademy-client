@@ -4,29 +4,36 @@ import { Draggable } from 'react-beautiful-dnd'
 
 class TaskCard extends React.Component {
 
+  state = {
+    complete: false
+  }
+
+  handleClick = () => {
+    this.setState((prevState) => {
+      return({complete: !prevState.complete})
+    })
+  }
+
   render() {
-    return (
-      <Draggable draggableId={this.props.task.id} index={this.props.index}>
+    return(
+      <Draggable draggableId={this.props.assignment.id} index={this.props.index}>
       {(provided, snapshot) => {
         return <div {...provided.draggableProps} ref={provided.innerRef} isDragging={snapshot.isDragging} {...provided.dragHandleProps}>
-          <Card>
+        <Card>
             <Card.Header.Title>
-            TASK NAME
+            {this.props.assignment.title}
             </Card.Header.Title>
             <Card.Content>
               <Content>
-              This is a description of a task.
+              {this.props.assignment.description}
               </Content>
-              <Button primary>Mark Done</Button>
+              <Button onClick={this.handleClick}>{this.state.complete ? "✅"  : "☑️" }</Button>
             </Card.Content>
-          </Card>
-        </div>
-    }
+        </Card>
+      </div>
+      }}
+    </Draggable>
+    )
   }
-  </Draggable>
-  )
-  }
-
 }
-
 export default TaskCard;

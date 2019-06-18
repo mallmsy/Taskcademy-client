@@ -14,8 +14,8 @@ class App extends React.Component {
   state = {
     activeUser: null,
     bio: "This is a bio about the active user.",
-    columns: [],
-    tasks: {}
+    courses: [],
+    enrolled: []
   }
 
   login = (username) => {
@@ -30,16 +30,10 @@ class App extends React.Component {
   }
 
   componentDidMount = () => {
-    fetch(`http://localhost:3000/tasks`)
+    fetch(`http://localhost:3000/api/v1/courses`)
       .then(resp => resp.json())
-      .then(tasks => this.setState({
-        tasks: tasks
-      }))
-
-      fetch(`http://localhost:3000/columns`)
-      .then(resp => resp.json())
-      .then(columns => this.setState({
-        columns: columns
+      .then(fetchedCourses => this.setState({
+        courses: fetchedCourses
       }))
     }
 
@@ -55,11 +49,11 @@ class App extends React.Component {
       <Switch>
         <Route path='/login' render={(routerProps) => { return <LoginForm login={this.login} {...routerProps}/> }}/>
         <Route path='/sign-up' component={SignUpForm}/>
-        
-        <Route path='/courses' render={(routerProps) => { return <ListContainer tasks={this.state.tasks} columns={this.state.columns} {...routerProps}/> }}/>
+
+        <Route path='/courses' render={(routerProps) => { return <ListContainer  browse={true} courses={this.state.courses} {...routerProps}/> }}/>
 
         <Route path="/profile" render={(routerProps) => { return <Profile handleChange={this.handleChange} activeUser={this.state.activeUser} bio={this.state.bio}/> }} />
-        // <Route path="/home" render={() => { return(<HomeTab activeUser={this.props.activeUser} />)}}/>
+        <Route path="/home" render={() => { return(<HomeTab courses={this.state.courses} activeUser={this.props.activeUser}/>)}}/>
       </Switch>
       </div>
     )

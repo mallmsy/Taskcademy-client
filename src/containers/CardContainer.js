@@ -1,28 +1,40 @@
 import React from 'react';
-import TaskCard from '../components/Card'
-import { Container, Card, Content } from 'reactbulma'
+import TaskCard from '../components/TaskCard'
+import { Container, Card, Content, Button } from 'reactbulma'
 import { Droppable } from 'react-beautiful-dnd'
 
 class CardContainer extends React.Component {
 
   render() {
-    console.log("we should be rendering a card containr lsit thing")
     return (
         <div className="column">
           <Card>
             <Card.Header.Title>
-            COURSE NAME
+            {this.props.blank ? "COMPLETED" : this.props.course.title}
+            <br/>
+            {this.props.browse ? <Button primary>Enroll</Button> : null}
             </Card.Header.Title>
-            <Droppable droppableId={this.props.column.id}>
+            <Droppable droppableId={this.props.blank ? this.props.droppableId : this.props.course.id}>
               {(provided, snapshot) => {
-                return <div ref={provided.innerRef} {...provided.droppableProps} isDraggingOver = {snapshot.isDraggingOver}>
-                  <Content>
-                  {this.props.tasks.map((task, index) => {
-                    return <TaskCard key={task.id} index={index} task={task}/>
-                  })}
-                  </Content>
-                </div>
-                } }
+                return (
+                  this.props.blank ? null :
+                  <div ref={provided.innerRef} {...provided.droppableProps} isDraggingOver = {snapshot.isDraggingOver}>
+                    <Content>
+                    {this.props.assignments.map((assignment, index) => {
+                      return(
+                      this.props.browse ?
+                        <div>
+                          <ul>
+                            <li>{assignment.title}</li>
+                          </ul>
+                        </div>
+                      :
+                      <TaskCard key={assignment.id} index={index} assignment={assignment}/>
+                    )
+                    })}
+                    </Content>
+                  </div>
+              )}}
             </Droppable>
           </Card>
         </div>
@@ -30,5 +42,4 @@ class CardContainer extends React.Component {
   }
 
 }
-
 export default CardContainer;
