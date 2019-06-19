@@ -114,11 +114,18 @@ class App extends React.Component {
       })
     })
     .then(res => res.json())
-    .then(response => this.setState((prevState) => {
-      return({
-        enrolled: [...prevState.enrolled, response]
-      })
-    }))
+
+    .then(response => {
+      if(response.errors) {
+        alert(response.errors)
+      } else {
+        this.setState((prevState) => {
+          return({
+            enrolled: [...prevState.enrolled, response]
+          })
+        })
+      }
+    })
   }
 
   handleProfileChange = (event) => {
