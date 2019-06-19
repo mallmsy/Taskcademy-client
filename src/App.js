@@ -34,7 +34,10 @@ class App extends React.Component {
   }
 
   logout = () => {
-    this.setState({activeUser: null})
+    this.setState({
+      activeUser: null,
+      enrolled: []
+    })
     localStorage.removeItem("token")
   }
 

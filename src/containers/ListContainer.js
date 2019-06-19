@@ -12,7 +12,7 @@ class ListContainer extends React.Component {
   render() {
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
-        <div className="columns is-multiline">
+        <div className="columns is-multiline is-variable">
         {this.props.browse ?
           this.props.courses.map(course => {
             return (

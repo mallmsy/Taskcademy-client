@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Section } from 'reactbulma'
+import { Container, Section, Notification } from 'reactbulma'
 
 import ListContainer from '../containers/ListContainer'
 
@@ -11,7 +11,13 @@ class HomeTab extends Component {
       <div>
       <Section>
         <Container>
+        {this.props.courses.length > 0 ?
           <ListContainer routerProps={this.props.routerProps} browse={false} courses={this.props.courses} assignments={this.props.courses.tasks} renderTaskShow={this.props.renderTaskShow}/>
+          :
+          <Notification primary>
+              Looks like you haven't enrolled in any courses yet! Go browse to get started!
+            </Notification>
+        }
         </Container>
       </Section>
       </div>

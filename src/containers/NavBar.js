@@ -8,7 +8,7 @@ const NavBar = (props) => {
     <Nav hasShadow>
       <Nav.Center className="navbar-start">
         <Nav.Item>
-        <Link to='/'><Image is="64x64" src='../avataaars.svg' alt='logo' /></Link>
+        <Link to='/'><Image is="128x128" src='../beefsteak.png' alt='logo' /></Link>
         </Nav.Item>
 
         <Nav.Item className="navbar-end">
