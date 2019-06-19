@@ -16,7 +16,9 @@ class App extends React.Component {
     activeUser: null,
     courses: [],
     enrolled: [],
-    currentTask: null
+    currentTask: null,
+    doneTasks: [],
+    draggedTask: null
   }
 
   signUp = (userObj) => {
@@ -25,10 +27,63 @@ class App extends React.Component {
     localStorage.setItem("token", userObj.token)
   }
 
+  handleOnDragEnd= (result) => {
+    if(result.destination === null) {
+      return
+    }
+
+    if(result.destination.droppableId === 99){
+      let finishedtask = null
+      const newEnrolled = this.state.enrolled.filter(list => {
+        if(list.id === result.source.droppableId){
+          let removeTask = list.tasks.filter(task => {
+            if(task.id === result.draggableId){
+              finishedtask = task
+            }
+            return task.id !== result.draggableId
+            })
+          list.tasks = removeTask
+          return list
+        }
+        return list
+      })
+
+      fetch(`http://localhost:3000/api/v1/task/${result.draggableId}`, {
+        method: 'PATCH',
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          status: "complete"
+        })
+      })
+      .then(res => res.json())
+      .then(response => {
+        console.log(response)
+        this.setState({
+          enrolled: newEnrolled,
+          doneTasks: [...this.state.doneTasks, finishedtask]
+        })
+      })
+    }
+
+  }
+
+
   login = (userObj) => {
+    let listsWithIncompleteTask = userObj.user.lists.map(list => {
+      return list.tasks.filter(task => task.status === 'static')
+    })
+
+    let listsWithCompleteTask = userObj.user.lists.map(list => {
+      return list.tasks.filter(task => task.status !== 'static')
+    })
+
     this.setState({
       activeUser: userObj.user,
-      enrolled: userObj.user.lists
+      doneTasks: listsWithCompleteTask,
+      enrolled: listsWithIncompleteTask
     })
     localStorage.setItem("token", userObj.token)
   }
@@ -72,6 +127,7 @@ class App extends React.Component {
   }
 
   render() {
+    console.log(this.state)
     return (
       <div className="App">
       <NavBar activeUser={this.state.activeUser} logout={this.logout}/>
@@ -88,9 +144,9 @@ class App extends React.Component {
 
         <Route path="/profile" render={(routerProps) => { return <Profile handleProfileChange={this.handleChange} activeUser={this.state.activeUser}/> }} />
 
-        <Route path="/home" render={(routerProps) => { return(<HomeTab renderTaskShow={this.renderTaskShow} courses={this.state.enrolled} activeUser={this.props.activeUser} routerProps={routerProps} />)}}/>
+        <Route path="/home" render={(routerProps) => { return(<HomeTab handleOnDragEnd={this.handleOnDragEnd} doneTasks={this.state.doneTasks} renderTaskShow={this.renderTaskShow} courses={this.state.enrolled} activeUser={this.props.activeUser} routerProps={routerProps} />)}}/>
 
-        <Route path="/task/:id" render={(routerProps) => { return(<TaskShow currentTask={this.state.currentTask} />)}}/>
+        <Route path="/task/:id" render={(routerProps) => { return(<TaskShow currentTask={this.state.currentTask} routerProps={routerProps}/>)}}/>
       </Switch>
       </div>
     )
@@ -111,6 +167,7 @@ class App extends React.Component {
           localStorage.removeItem("token")
           alert(response.errors)
         } else {
+
           this.setState({
             activeUser: response,
             enrolled: response.lists

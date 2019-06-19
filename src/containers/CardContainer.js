@@ -5,6 +5,10 @@ import { Droppable } from 'react-beautiful-dnd'
 
 class CardContainer extends React.Component {
 
+  // state={
+  //   id: this.props.course.id
+  // }
+
   handleClick = () => {
     console.log(this.props)
     if (this.props.activeUser) {
@@ -16,18 +20,19 @@ class CardContainer extends React.Component {
   }
 
   render() {
-    console.log(this.props)
+    // console.log('props',this.state.id)
     return (
       <div className="column is-one-quarter">
         <Message primary>
          <Message.Header>
-           <SubTitle>{this.props.course.title}</SubTitle>
+           <SubTitle>{this.props.browse ? this.props.course.title : this.props.course.course.title}</SubTitle>
          </Message.Header>
          <Message.Body>
 
          {/*<Progress warning value="25" max="100"/>*/}
 
-         <Droppable droppableId={this.props.blank ? this.props.droppableId : this.props.course.id}>
+         <Droppable droppableId={this.props.course.id}>
+
            {(provided, snapshot) => {
              return (
                <div ref={provided.innerRef} {...provided.droppableProps} isDraggingOver = {snapshot.isDraggingOver}>

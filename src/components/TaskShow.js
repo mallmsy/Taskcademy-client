@@ -3,6 +3,14 @@ import { Image, Hero, Title, Container, SubTitle, Message, Section } from 'react
 
 class TaskShow extends React.Component {
 
+  state = {
+    currentTask: {
+      title: "",
+      description: "",
+      video_url: ""
+    }
+  }
+
   render() {
     return(
       <div>
@@ -10,10 +18,10 @@ class TaskShow extends React.Component {
           <Hero.Body>
             <Container>
               <Title>
-                {this.props.currentTask.title}
+                {this.state.currentTask.title}
               </Title>
               <SubTitle>
-                {this.props.currentTask.description}
+                {this.state.currentTask.description}
               </SubTitle>
             </Container>
           </Hero.Body>
@@ -27,12 +35,22 @@ class TaskShow extends React.Component {
                 width: "100%",
                 height: "100%"
               }}
-                src={`https://www.youtube.com/embed/${this.props.currentTask.video_url}`}
+                src={`https://www.youtube.com/embed/${this.state.currentTask.video_url}`}
                 frameBorder="0"
               />
         </div>
       </div>
 
   )}
+
+  componentDidMount(){
+    fetch(`http://localhost:3000/api/v1${this.props.routerProps.location.pathname}`)
+    .then(res => res.json())
+    .then(task => {
+      console.log(task)
+      this.setState({currentTask: task})
+    })
+
+  }
 }
 export default TaskShow;

@@ -14,7 +14,6 @@ class TaskCard extends React.Component {
   }
 
   render() {
-    console.log(this.props)
     return(
       <Draggable draggableId={this.props.assignment.id} index={this.props.index}>
       {(provided, snapshot) => {
