@@ -2,6 +2,7 @@ import React from 'react';
 import { Container, Section } from 'reactbulma'
 
 import TabContainer from './TabContainer'
+import Main from '../components/Main'
 
 
 
@@ -16,9 +17,7 @@ class MainContainer extends React.Component {
           <TabContainer activeUser={this.props.activeUser}/>
         </Container>
       :
-      <Container>
-        <p>Welcome. Learn things here.</p>
-      </Container>
+      null
     }
     </Section>
     );

@@ -10,6 +10,7 @@ import ListContainer from './containers/ListContainer'
 import Profile from './components/Profile'
 import HomeTab from './components/HomeTab'
 import TaskShow from './components/TaskShow'
+import Main from './components/Main'
 
 class App extends React.Component {
   state = {
@@ -136,6 +137,8 @@ class App extends React.Component {
       <MainContainer activeUser={this.state.activeUser}/>
 
       <Switch>
+        <Route path='/' exact render={() => <Main />}/>
+
         <Route path='/login' render={(routerProps) => { return <LoginForm login={this.login} {...routerProps}/> }}/>
 
         <Route path='/sign-up' render={() => { return <SignUpForm signUp={this.signUp}/> }}/>

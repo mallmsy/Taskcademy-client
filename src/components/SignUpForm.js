@@ -17,6 +17,7 @@ class SignUpForm extends Component {
   }
 
   handleSubmit = () => {
+    console.log("made it to fetch")
     fetch("http://localhost:3000/api/v1/users", {
       method: "POST",
       headers: {
@@ -28,7 +29,10 @@ class SignUpForm extends Component {
       })
     })
     .then(res => res.json())
-    .then(user => this.props.signUp(user))
+    .then(user => {
+      console.log("Returned User", user)
+      this.props.signUp(user)
+    })
   }
 
   render() {

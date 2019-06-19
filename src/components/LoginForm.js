@@ -20,6 +20,7 @@ class LoginForm extends Component {
     })
     .then(res => res.json())
     .then(user => {
+      console.log(user)
       this.props.login(user)
       this.props.history.push("/home")
     })
