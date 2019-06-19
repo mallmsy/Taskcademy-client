@@ -18,12 +18,7 @@ class TaskShow extends React.Component {
             </Container>
           </Hero.Body>
         </Hero>
-        <div>
-          <Message primary>
-            <Message.Header>
-              <p>Video</p>
-            </Message.Header>
-            <Container>
+        <div style={{width: "100%", height: "600px"}}>
             <iframe
               style={{
                 position: "relative",
@@ -35,8 +30,6 @@ class TaskShow extends React.Component {
                 src={`https://www.youtube.com/embed/${this.props.currentTask.video_url}`}
                 frameBorder="0"
               />
-            </Container>
-          </Message>
         </div>
       </div>
 

@@ -25,7 +25,7 @@ class CardContainer extends React.Component {
          </Message.Header>
          <Message.Body>
 
-         <Progress warning value="25" max="100"/>
+         {/*<Progress warning value="25" max="100"/>*/}
 
          <Droppable droppableId={this.props.blank ? this.props.droppableId : this.props.course.id}>
            {(provided, snapshot) => {
