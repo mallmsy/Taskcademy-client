@@ -5,10 +5,6 @@ import { Droppable } from 'react-beautiful-dnd'
 
 class CardContainer extends React.Component {
 
-  // state={
-  //   id: this.props.course.id
-  // }
-
   handleClick = () => {
     console.log(this.props)
     if (this.props.activeUser) {
@@ -20,7 +16,7 @@ class CardContainer extends React.Component {
   }
 
   render() {
-    // console.log('props',this.state.id)
+    console.log("card container props", this.props.course.course)
     return (
       <div className="column is-one-quarter">
         <Message primary>
@@ -29,7 +25,6 @@ class CardContainer extends React.Component {
          </Message.Header>
          <Message.Body>
 
-         {/*<Progress warning value="25" max="100"/>*/}
 
          <Droppable droppableId={this.props.course.id}>
 
@@ -60,6 +55,10 @@ class CardContainer extends React.Component {
        </Message>
       </div>
     );
+  }
+
+  componentDidMount() {
+    setTimeout(() => console.log("timing out!"), 1000)
   }
 }
 export default CardContainer;

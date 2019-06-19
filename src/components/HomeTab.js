@@ -12,7 +12,7 @@ class HomeTab extends Component {
       <Section>
         <Container>
         {this.props.courses.length > 0 ?
-          <ListContainer doneTasks={this.props.doneTasks} handleOnDragEnd={this.props.handleOnDragEnd} routerProps={this.props.routerProps} browse={false} courses={this.props.courses} assignments={this.props.courses.tasks} renderTaskShow={this.props.renderTaskShow}/>
+          <ListContainer activeUser={this.props.activeUser} doneTasks={this.props.doneTasks} handleOnDragEnd={this.props.handleOnDragEnd} routerProps={this.props.routerProps} browse={false} courses={this.props.courses} assignments={this.props.courses.tasks} renderTaskShow={this.props.renderTaskShow}/>
           :
           <Notification primary>
               Looks like you haven't enrolled in any courses yet! Go browse to get started!

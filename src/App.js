@@ -20,7 +20,7 @@ class App extends React.Component {
     currentTask: null,
     doneTasks: [],
     draggedTask: null
-  }
+    }
 
   signUp = (userObj) => {
     this.setState({activeUser: userObj.user})
@@ -72,7 +72,8 @@ class App extends React.Component {
   }
 
 
-  login = (userObj) => {
+  login = (userObj, history) => {
+    console.log("history", history)
     let listsWithIncompleteTask = userObj.user.lists.map(list => {
       return list.tasks.filter(task => task.status === 'static')
     })
@@ -81,12 +82,13 @@ class App extends React.Component {
       return list.tasks.filter(task => task.status !== 'static')
     })
 
+    localStorage.setItem("token", userObj.token)
+
     this.setState({
       activeUser: userObj.user,
       doneTasks: listsWithCompleteTask,
       enrolled: listsWithIncompleteTask
     })
-    localStorage.setItem("token", userObj.token)
   }
 
   logout = () => {
@@ -135,7 +137,6 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.state)
     return (
       <div className="App">
       <NavBar activeUser={this.state.activeUser} logout={this.logout}/>
@@ -154,7 +155,7 @@ class App extends React.Component {
 
         <Route path="/profile" render={(routerProps) => { return <Profile handleProfileChange={this.handleChange} activeUser={this.state.activeUser}/> }} />
 
-        <Route path="/home" render={(routerProps) => { return(<HomeTab handleOnDragEnd={this.handleOnDragEnd} doneTasks={this.state.doneTasks} renderTaskShow={this.renderTaskShow} courses={this.state.enrolled} activeUser={this.props.activeUser} routerProps={routerProps} />)}}/>
+        <Route path="/home" render={(routerProps) => { return(<HomeTab handleOnDragEnd={this.handleOnDragEnd} doneTasks={this.state.doneTasks} renderTaskShow={this.renderTaskShow} courses={this.state.enrolled} activeUser={this.state.activeUser} routerProps={routerProps} />)}}/>
 
         <Route path="/task/:id" render={(routerProps) => { return(<TaskShow currentTask={this.state.currentTask} routerProps={routerProps}/>)}}/>
       </Switch>
@@ -178,10 +179,30 @@ class App extends React.Component {
           alert(response.errors)
         } else {
 
-          this.setState({
-            activeUser: response,
-            enrolled: response.lists
-          })
+          let listsWithCompleteTask = []
+         response.lists.map(list => {
+           list.tasks.filter(task => {
+             if(task.status === 'complete'){
+               listsWithCompleteTask = [...listsWithCompleteTask, task]
+             }
+           })
+         })
+
+         let coursesWithIncompleteTask = response.lists.map(list =>
+           {
+           let filteredList = list.tasks.filter(task => {
+             return task.status === "static"
+           })
+           list.tasks = filteredList
+           return list
+         })
+
+         this.setState({
+           activeUser: response,
+           enrolled: coursesWithIncompleteTask,
+           doneTasks: listsWithCompleteTask
+         })
+
         }
       })
     }

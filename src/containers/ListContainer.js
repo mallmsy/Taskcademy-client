@@ -11,8 +11,6 @@ class ListContainer extends React.Component {
   }
 
   render() {
-    console.log("inside list list container, at top of render", this.props.courses)
-
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
         <div className="columns is-multiline is-variable">
@@ -34,13 +32,13 @@ class ListContainer extends React.Component {
           )
           :
           this.props.courses.map(course => {
-            console.log("inside list container", course)
             return (
               <>
                 <CardContainer
                 activeUser={this.props.activeUser}
                 routerProps={this.props.routerProps}
                 course={course}
+                browse={false}
                 assignments={course.tasks}
                 key={course.id}
                 renderTaskShow={this.props.renderTaskShow}/>
