@@ -72,8 +72,7 @@ class App extends React.Component {
   }
 
 
-  login = (userObj, history) => {
-    console.log("history", history)
+  login = (userObj) => {
     let listsWithIncompleteTask = userObj.user.lists.map(list => {
       return list.tasks.filter(task => task.status === 'static')
     })
@@ -130,11 +129,6 @@ class App extends React.Component {
     })
   }
 
-  handleProfileChange = (event) => {
-    this.setState({
-      [event.target.name]: event.target.value
-    })
-  }
 
   render() {
     return (
@@ -153,7 +147,7 @@ class App extends React.Component {
 
         <Route path='/courses' render={(routerProps) => { return <ListContainer enroll={this.enroll} activeUser={this.state.activeUser} browse={true} courses={this.state.courses} routerProps={routerProps}/> }}/>
 
-        <Route path="/profile" render={(routerProps) => { return <Profile handleProfileChange={this.handleChange} activeUser={this.state.activeUser}/> }} />
+        <Route path="/profile" render={(routerProps) => { return <Profile activeUser={this.state.activeUser}/> }} />
 
         <Route path="/home" render={(routerProps) => { return(<HomeTab handleOnDragEnd={this.handleOnDragEnd} doneTasks={this.state.doneTasks} renderTaskShow={this.renderTaskShow} courses={this.state.enrolled} activeUser={this.state.activeUser} routerProps={routerProps} />)}}/>
 

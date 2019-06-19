@@ -16,7 +16,6 @@ class CardContainer extends React.Component {
   }
 
   render() {
-    console.log("card container props", this.props.course.course)
     return (
       <div className="column is-one-quarter">
         <Message primary>
@@ -33,7 +32,7 @@ class CardContainer extends React.Component {
                <div ref={provided.innerRef} {...provided.droppableProps} isDraggingOver = {snapshot.isDraggingOver}>
                 <br />
                  <Content>
-                 <h4>What you'll learn:</h4>
+                 {this.props.browse ? <h4>What you'll learn:</h4> : null}
                  {this.props.assignments.map((assignment, index) => {
                    return(
                    this.props.browse ?
@@ -55,10 +54,6 @@ class CardContainer extends React.Component {
        </Message>
       </div>
     );
-  }
-
-  componentDidMount() {
-    setTimeout(() => console.log("timing out!"), 1000)
   }
 }
 export default CardContainer;

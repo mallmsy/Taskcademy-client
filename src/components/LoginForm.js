@@ -20,9 +20,10 @@ class LoginForm extends Component {
     })
     .then(res => res.json())
     .then(user => {
-      this.props.login(user, this.props.history)
+      this.props.login(user)
     })
 
+    this.props.history.push('/home')
 
   }
 
@@ -33,6 +34,7 @@ class LoginForm extends Component {
   }
 
   render() {
+    console.log(this.props)
     return (
       <div>
 

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Container, Section, Notification } from 'reactbulma'
 
 import ListContainer from '../containers/ListContainer'
+import TabContainer from '../containers/TabContainer'
 
 
 class HomeTab extends Component {
